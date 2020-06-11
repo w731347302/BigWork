@@ -2,9 +2,13 @@
 #include <opencv2/opencv.hpp>
 #include <stdlib.h>
 #include "fuction.h"
+#include <ctime>
 
 using namespace std;
 using namespace cv;
+
+clock_t c_start;
+clock_t c_end;
 
 vector<Point> waterPoints;
 Point p;
@@ -30,12 +34,14 @@ int main()
 	int cnt = 0;   //第一帧选取喷射点
 	while (1)
 	{
+		
 		cap >> frame;
 		if (frame.empty())
 		{
 			cout << "finished" << endl;
 			return 0;
 		}
+		c_start = clock();
 		cvtColor(frame, gray_frame, COLOR_BGR2GRAY);
 		if (cnt == 0)
 		{
@@ -64,6 +70,9 @@ int main()
 		}
 		cnt++;
 		res_frame = 0;
+		c_end = clock();
+		double endtime = (double)(c_end - c_start) / CLOCKS_PER_SEC;
+		cout << endtime * 1000 << "ms" << endl;
 	}
 
 	cout << "finished" << endl;

@@ -97,7 +97,7 @@ void draw_curve_fit(Mat &frame, Mat A)  //绘制曲线
 	polylines(frame, points_fit, false, Scalar(255, 0, 0),2);
 }
 
-void background_diff(Mat frame, Ptr<BackgroundSubtractor> model, Mat &foregroud, Mat &background,Mat &foregroundMask,bool doUpdateModel,bool doSmoothMask)
+void background_diff(Mat frame, Ptr<BackgroundSubtractor> model, Mat &foregroud, Mat &background,Mat &foregroundMask,bool doUpdateModel,bool doSmoothMask)  //自动背景差分
 {
 	model->apply(frame, foregroundMask, doUpdateModel ? -1 : 0);
 	//imshow("image", frame);
@@ -119,12 +119,12 @@ void background_diff(Mat frame, Ptr<BackgroundSubtractor> model, Mat &foregroud,
 		//imshow("mean background image", background);
 }
 
-void connectfind(Mat out_frame,Mat &frame,Point p,Point fire_point)
+void connectfind(Mat out_frame,Mat &frame,Point p,Point fire_point)   //连通域
 {
 	Mat labels, states, cent;
 	vector<Point> points;
 	int num = connectedComponentsWithStats(out_frame, labels, states, cent);
-	cout << num - 1 << endl;
+	//cout << num - 1 << endl;
 	for (int i = 0; i < num; i++)
 	{
 		Rect rect;
